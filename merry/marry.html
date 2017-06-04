@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>旋转木马</title>
+	<style>
+		*{
+            margin: 0;
+            padding: 0;
+        }
+        #stage{
+            width: 1000px;
+            height: 300px;
+            background: #cccccc;
+            margin:50px auto;
+            box-shadow:0 0 3px 3px rgba(0,0,0,0.5);
+            overflow: hidden;
+            /*border:1px solid #000;*/
+            -webkit-perspective: 800px;
+            -webkit-perspective-origin: center -20%;
+        }
+        #container{
+        	width: 128px;
+        	height: 100px;
+        	margin: 80px auto;
+        	position: relative;
+        	-webkit-transform-style: preserve-3d;
+        	-webkit-transition: transform 1s ease;
+        }
+        #container img{
+            width: 128px;
+            height: 100px;
+            position: absolute;
+            left:0;
+            top:0;
+            /*-webkit-transition:transform 1s ease ;*/
+        }
+        /*#container img:nth-child(1){
+        	-webkit-transform: translateZ(200px);
+        }
+        #container img:nth-child(2){
+        	-webkit-transform: rotateY(-40deg) translateZ(200px);
+        }
+        #container img:nth-child(3){
+        	-webkit-transform: rotateY(-80deg) translateZ(200px);
+        }
+        #container img:nth-child(4){
+        	-webkit-transform: rotateY(-120deg) translateZ(200px);
+        }
+        #container img:nth-child(5){
+        	-webkit-transform: rotateY(-160deg) translateZ(200px);
+        }
+        #container img:nth-child(6){
+        	-webkit-transform: rotateY(-200deg) translateZ(200px);
+        }
+        #container img:nth-child(7){
+        	-webkit-transform: rotateY(-240deg) translateZ(200px);
+        }
+        #container img:nth-child(8){
+        	-webkit-transform: rotateY(-280deg) translateZ(200px);
+        }
+        #container img:nth-child(9){
+        	-webkit-transform: rotateY(-320deg) translateZ(200px);
+        }*/
+	</style>
+</head>
+<body>
+	<div id="stage">
+		<div id="container">
+			<!-- <img src="img/1.jpg" alt="">
+			<img src="img/2.jpg" alt="">
+			<img src="img/3.jpg" alt="">
+			<img src="img/4.jpg" alt="">
+			<img src="img/5.jpg" alt="">
+			<img src="img/6.jpg" alt="">
+			<img src="img/7.jpg" alt="">
+			<img src="img/8.jpg" alt="">
+			<img src="img/9.jpg" alt=""> -->
+
+		</div>
+	</div>
+	<script>
+		var oContainer = document.getElementById('container');
+		var aImg = document.getElementsByTagName('img');
+		var html = '';
+		var x = 64/Math.tan(20*Math.PI/180)+20;
+		// for(var i=0;i<9;i++){
+		// 	html+='<img src="img/'+(i+1)+'.jpg" style="-webkit-transform:rotateY('+(-i*40)+'deg) translateZ('+x+'px)"/>';
+		// }
+		// oContainer.innerHTML = html;
+		var count = 0;
+		for(var i=0;i<9;i++){
+			var oImg = new Image();
+			oImg.onload = function(){
+				count++;
+				if(count == 9){
+					//9张图片都加载完了
+					var time = 900;
+					for(var i=0;i<9;i++){
+						time-=100;
+						aImg[i].style.WebkitTransition = 'transform 2s ease '+time+'ms';
+						aImg[i].style.WebkitTransform = 'rotateY('+(-i*40)+'deg) translateZ('+x+'px)';
+					}
+				}
+			}
+			oImg.src = 'img/'+(i+1)+'.jpg';
+			oContainer.appendChild(oImg);
+		}
+		var num = 0;
+			oContainer.onclick =function(){
+				num++;
+				oContainer.style.WebkitTransform = 'rotateY('+num*40+'deg)';
+			}
+			
+
+	</script>
+</body>
+</html>
