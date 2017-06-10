@@ -86,8 +86,8 @@
 		}
 		var index = 0;
 		function loadSuccess(){
-			for(var i=0;i<4;i++){
-				for(var j=0;j<6;j++){
+			for(var i=0;i<4;i++){ //行数
+				for(var j=0;j<6;j++){ //列
 					var oDiv = document.createElement('div');
 					oDiv.className = 'img';
 					oDiv.rowCol = {
@@ -102,19 +102,27 @@
 					index++;
 				}
 			}
+
+
+			//图片之间的空隙
 			var spaceX = (oContainer.offsetWidth-6*135)/7;
 			var spaceY = (oContainer.offsetHeight-4*135)/5;
 			var aDiv = oContainer.getElementsByTagName('div');
+
+			//循环24个div 设置left top值
 			for(var i=0;i<aDiv.length;i++){
 				aDiv[i].style.transitionDelay = (23-i)*100+'ms';
 				aDiv[i].style.left = aDiv[i].rowCol.col*(spaceX+135)+spaceX+'px';
 				aDiv[i].style.top = aDiv[i].rowCol.row*(spaceY+135)+spaceY+'px';
 				aDiv[i].style.WebkitTransform = 'rotate('+(Math.random()-0.5)*40+'deg)';
 			}
+
+
 			var iLeft = (oContainer.offsetWidth-6*127)/2;
 			var iTop = (oContainer.offsetHeight-4*127)/2;
 
-			var flag = true;
+
+			var flag = true;  //代表打开状态  false代表合上状态
 			function fn(){
 				if(flag){ //合并
                     for(var i=0; i<aDiv.length; i++){
@@ -135,6 +143,8 @@
 
                     oPrev.style.display = 'block';
                     oNext.style.display = 'block';
+
+
                 }else{//散开
                     for(var i=0; i<aDiv.length; i++){
                         var oDiv = aDiv[i];
@@ -154,12 +164,12 @@
             oPrev = document.getElementById('prev');
 			oNext = document.getElementById('next');
 			oPrev.onclick = oNext.onclick = function(){
-				if(this == oPrev){
+				if(this == oPrev){   //上一个按钮
 					iNow--;
 					if(iNow == -1){
 						iNow = aDiv.length-1;
 					}
-				}else{
+				}else{   //下一个按钮
 					iNow++;
 					if(iNow == aDiv.length){
 						iNow = 0;
@@ -173,13 +183,17 @@
 				arr.sort(function(){
 					return Math.random()-0.5;
 				});
+
+
 				// for(var i=0; i<aDiv.length; i++){
 				// 	var oSpan = aDiv[i].getElementsByTagName('span')[0];
 				// 	var random = arr[i];
 				// 	oSpan.style.transitionDelay = random*10+'ms';
 				// 	oSpan.style.backgroundImage = 'url(img/'+(iNow+1)+'.jpg)';
 				// }
-				var timer = setInterval(function(){
+
+
+				var timer = setInterval(function(){  //利用定时器的方法
 					var random = arr.pop();
 					var oSpan = aDiv[random].getElementsByTagName('span')[0];
 					oSpan.style.backgroundImage = 'url(img/'+(iNow+1)+'.jpg)';
